@@ -1,17 +1,11 @@
 package flightcompare.scrapper;
 
-import org.testng.annotations.Test;
-
-import flightcompare.DTO.FlightResponseDto;
 import flightcompare.pageobjet.Flight_Listpage;
 import flightcompare.pageobjet.FlightHomepage;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
