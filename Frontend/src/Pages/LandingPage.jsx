@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, Calendar, Search, Tag, Compass, NotebookTabs, Facebook, Twitter, X, Star } from 'lucide-react';
 import { useNavigate ,} from 'react-router-dom';
 import { useRef } from "react"
-import heroImage from "../asserts/img2.png"
+import heroImage from "../assets/img2.png"
 import NavBar from '../components/Navbar';
 import { COLORS } from '../constants/colorConstants'
 

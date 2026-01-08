@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plane, ArrowRight, Calendar, Clock } from "lucide-react";
-import myImage from "../asserts/logo.png";
+import myImage from "../assets/logo.png";
 import NavBar from "../components/Navbar";
 import ComparisonCards from "../components/ComparisonCards";
 
