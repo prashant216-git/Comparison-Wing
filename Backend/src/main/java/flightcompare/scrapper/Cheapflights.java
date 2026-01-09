@@ -1,6 +1,6 @@
 package flightcompare.scrapper;
 
-
+import org.testng.annotations.Test;
 
 import flightcompare.DTO.FlightResponseDto;
 import flightcompare.pageobjet.Flight_Listpage;

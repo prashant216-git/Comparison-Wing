@@ -9,8 +9,6 @@ function ComparisonCards({ title, data, color }) {
             {data.length} options
           </span>
         </div>
-        
-
 
         <div className="space-y-4">
           {data.map((flight) => (

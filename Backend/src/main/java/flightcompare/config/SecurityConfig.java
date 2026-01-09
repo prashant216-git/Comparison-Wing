@@ -28,33 +28,31 @@ public class SecurityConfig {
 	private JwtFilter jwtfilter;
 	@Autowired
 	private Userdetailservice UserdetailService;
-	@Bean
-	protected SecurityFilterChain securityfilterchain(HttpSecurity http) throws Exception {
-
-	    http
-	        .csrf(csrf -> csrf.disable())
-	        .cors(Customizer.withDefaults())  // <-- ⭐ ADD THIS LINE ⭐
-	        .authorizeHttpRequests(request -> request
-	                .requestMatchers("/auth/**",
-	                        "/v3/api-docs/**",
-	                        "/swagger-ui/**",
-	                        "/auth",
-	                        "/swagger-ui.html/**",
-	                        "/favicon.ico/**",
-	                        "/.well-known/**",
-	                        "/signup/**",
-	                        "/signin/**",
-	                        "/getscheduleflights/**"
-	                ).permitAll()
-	                .anyRequest().authenticated()
-	        )
-	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-	    http.addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);
-
-	    return http.build();
+@Bean
+	protected SecurityFilterChain securityfilterchain(HttpSecurity http) throws Exception{
+	
+		 http
+		.csrf(csrf->csrf.disable())
+		.authorizeHttpRequests(request->request
+				.requestMatchers("/auth/**",
+			"/v3/api-docs/**",
+				"/swagger-ui/**",
+				"/auth",
+				"/swagger-ui.html/**",
+				"/favicon.ico/**",
+			"/.well-known/**",
+				"/signup/**",
+				"/signin/**",
+				"/getscheduleflights/**").permitAll()
+				
+				
+				
+				.anyRequest().authenticated())
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);
+		return http.build();
 	}
-
+	
 	@Bean
 	public DaoAuthenticationProvider auhenticationProvider() {
 		DaoAuthenticationProvider authprovider =new DaoAuthenticationProvider();
