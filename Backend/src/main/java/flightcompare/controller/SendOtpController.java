@@ -36,7 +36,7 @@ private EmailService emailService;
 @PostMapping("/send-otp")
 	public ResponseEntity<String> sendOtp(@RequestBody SendOtpDto otpa){ 
 		
-	if(otpa.getEmail()!=null && UserRepo.existsByEmail(otpa.getEmail())) {
+	if(otpa.getEmail()!=null && otpa.getEmail()!="") {
 		String otp = otpService.generateOTP();
 		
 
@@ -49,7 +49,7 @@ private EmailService emailService;
 		return ResponseEntity.ok(token+ otp);
 	}
 	else {
-		return ResponseEntity.status(400).body("Email not found");
+		return ResponseEntity.status(400).body("otp sent failed because mail is blank or null");
 	}
 }
 @PostMapping("/verify-otp")
