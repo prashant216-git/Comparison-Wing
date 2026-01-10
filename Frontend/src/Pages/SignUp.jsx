@@ -29,7 +29,7 @@ const handleSubmit2= async (e)=>{
     };
 
     try {
-      const response = await fetch("http://localhost:3001/signup", {
+      const response = await fetch("https://api.comparewings.world/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // bata rahe hain ki JSON bhej rahe
