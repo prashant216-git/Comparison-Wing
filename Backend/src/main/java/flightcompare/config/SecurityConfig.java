@@ -32,8 +32,8 @@ public class SecurityConfig {
 	protected SecurityFilterChain securityfilterchain(HttpSecurity http) throws Exception{
 	
 		 http
-				 .cors().disable()
-		.csrf(csrf->csrf.disable())
+				 .cors(Customizer.withDefaults())
+				 .csrf(csrf->csrf.disable())
 		.authorizeHttpRequests(request->request
 				.requestMatchers("/auth/**",
 			"/v3/api-docs/**",
