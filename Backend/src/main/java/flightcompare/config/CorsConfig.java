@@ -20,8 +20,9 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList("http://localhost:5173",  "https://comparewings.world",
-                "https://www.comparewings.world","https://api.comparewings.world"));
-        config.setAllowedHeaders(Arrays.asList("*"));
+                "https://www.comparewings.world","https://api.comparewings.world","http://api.comparewings.world"));
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
+
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
