@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,10 @@ public class Emailserviceimplementation implements flightcompare.service.EmailSe
 		    String template = Files.readString(Path.of("src/main/resources/Templates/OTP.html"));
             String htmlContent = template.replace("{{OTP}}", otp); 
 			helper = new MimeMessageHelper(message,true);
-		 File lg=new File("src/main/resources/Static/images/logo.jpg");
-		helper.addInline("logo",lg);
+			ClassPathResource logo = new ClassPathResource("static/images/logo.jpg");
+			helper.addInline("logo", logo);
+
+
 		helper.setFrom(fromEmail);
 		helper.setTo(to);
 		message.setSubject("Confirm Your Registration");
