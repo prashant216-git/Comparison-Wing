@@ -1,5 +1,6 @@
 package flightcompare.service.impl;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -31,8 +32,8 @@ public class Emailserviceimplementation implements flightcompare.service.EmailSe
 		    String template = Files.readString(Path.of("src/main/resources/Templates/OTP.html"));
             String htmlContent = template.replace("{{OTP}}", otp); 
 			helper = new MimeMessageHelper(message,true);
-		 
-		System.out.println(htmlContent);
+		 File lg=new File("src/main/resources/Static/images/logo.jpg");
+		helper.addInline("logo",lg);
 		helper.setFrom(fromEmail);
 		helper.setTo(to);
 		message.setSubject("Confirm Your Registration");
