@@ -35,8 +35,10 @@ private UserRepo UserRepo;
 private EmailService emailService;
 @PostMapping("/send-otp")
 	public ResponseEntity<String> sendOtp(@RequestBody SendOtpDto otpa){ 
-		
-	if(otpa.getEmail()!=null && otpa.getEmail().isEmpty()) {
+		if(UserRepo.existsByEmail(otpa.getEmail())){
+			return ResponseEntity.status(409).body("Email Already Exist");
+		}
+	else if(otpa.getEmail()!=null && otpa.getEmail().isEmpty()) {
 		String otp = otpService.generateOTP();
 		
 
