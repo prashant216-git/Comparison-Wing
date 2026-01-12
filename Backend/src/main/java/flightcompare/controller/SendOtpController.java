@@ -36,7 +36,7 @@ private EmailService emailService;
 @PostMapping("/send-otp")
 	public ResponseEntity<String> sendOtp(@RequestBody SendOtpDto otpa){ 
 		
-	if(otpa.getEmail()!=null && otpa.getEmail()!="") {
+	if(otpa.getEmail()!=null && otpa.getEmail().isEmpty()) {
 		String otp = otpService.generateOTP();
 		
 

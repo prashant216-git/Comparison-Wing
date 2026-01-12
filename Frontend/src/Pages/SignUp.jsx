@@ -22,37 +22,37 @@ const handleSubmit2= async (e)=>{
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      username: Fullname,
-      email: email,
-      password: password, 
-    };
+    // const payload = {
+    //   username: Fullname,
+    //   email: email,
+    //   password: password, 
+    // };
 
-    try {
-      const response = await fetch("https://api.comparewings.world/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // bata rahe hain ki JSON bhej rahe
-        },
-        body: JSON.stringify(payload), // JS object -> JSON string
-      });
+    // try {
+    //   const response = await fetch("https://api.comparewings.world/signup", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json", // bata rahe hain ki JSON bhej rahe
+    //     },
+    //     body: JSON.stringify(payload), // JS object -> JSON string
+    //   });
 
-      // Response ka status check karo
-      if (!response.ok) {
-        // agar status 200-299 nahi hai
-        console.error("Signup failed");
-        return;
-      }
+    //   // Response ka status check karo
+    //   if (!response.ok) {
+    //     // agar status 200-299 nahi hai
+    //     console.error("Signup failed");
+    //     return;
+    //   }
 
-      const result = await response.text(); // API se jo data aaya
-      console.log("Signup success:", result);
-      navigate("/verification");  
-      // yaha pe aap alert bhi dikha sakte ho ya next page pe navigate
+    //   const result = await response.text(); // API se jo data aaya
+    //   console.log("Signup success:", result);
+    //   navigate("/verification");  
+    //   // yaha pe aap alert bhi dikha sakte ho ya next page pe navigate
 
-    } 
-    catch (error) {
-      console.error("Error while calling API:", error);
-    }
+    // } 
+    // catch (error) {
+    //   console.error("Error while calling API:", error);
+    // }
 
   
 
@@ -65,7 +65,7 @@ const handleSubmit2= async (e)=>{
    
 
   try {
-  const otpresponse = await fetch("http://localhost:3001/auth/send-otp",{
+  const otpresponse = await fetch("http://15.168.144.125:8080/auth/send-otp",{
     method: "post",
     headers:{
       "Content-Type":"application/json" ,

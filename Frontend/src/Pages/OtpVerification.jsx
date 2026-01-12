@@ -64,13 +64,11 @@ export default function OtpVerification() {
     e.preventDefault();
     const fullOtp = otp.join("");
     console.log("Submitted OTP:", fullOtp);
-
-  
-    //   navigate("/dashboard");
-    // } else {
-    //   alert("Invalid OTP");
-    // }
     alert(`Verifying OTP: ${fullOtp}`);
+    const payload={
+      otp:otp,
+      jwt:jwt
+    }
    
   };
 
