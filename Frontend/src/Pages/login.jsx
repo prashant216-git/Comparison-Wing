@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 export default function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const [value, setvalue] = useState({
-    email:"",
+    username:"",
     password:""
   })
+  
 
 const handleChange=(event)=>{
  
@@ -23,11 +26,46 @@ const handleChange=(event)=>{
 
 }
 
-const formsubmit =(e)=>{
+const formsubmit = async (e) => {
   e.preventDefault();
-  console.log(value)
+  console.log("FORM SUBMITTED");  
 
-}
+  try {
+    const response = await fetch(
+      "http://localhost:8080/auth/signin",
+      {
+        method: "POST",   // ✅ use POST
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(value),
+      }
+    );
+console.log("Payload Sent:", value);
+    if (!response.ok) {
+      throw new Error("API Failed");
+    }
+
+    Swal.fire({
+      title: "Success!",
+      text: "OTP sent successfully",
+      icon: "success",
+    });
+
+    
+
+  } catch (error) {
+    console.error(error);
+
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong",
+      icon: "error",
+    });
+  }
+};
+
+
 
   useEffect(() => {
     // Google Font
@@ -95,12 +133,12 @@ const formsubmit =(e)=>{
 
                     {/* Email */}
                     <label className="flex flex-col w-full hover:scale-102 transition-transform ease-in ">
-                      <p className="pb-2 font-medium">Email</p>
-                      <input name="email" onChange={handleChange}    //pass the function for change
-                           value={value.email}
+                      <p className="pb-2 font-medium">Username</p>
+                      <input name="username" onChange={handleChange}    //pass the function for change
+                           value={value.username}
                         className="form-input rounded-lg border border-border-light dark:border-border-dark p-4 h-12 bg-white w-full shadow-xl "
-                        type="email"
-                        placeholder="Enter your email"
+                        type="text"
+                        placeholder="Enter your username"
                       />
                     </label>
 
@@ -135,7 +173,7 @@ const formsubmit =(e)=>{
                     {/* Sign In Button */}
 
                     <button  onClick={formsubmit}
-                      type="submit"
+                      type="button"
                       className="   bg-secondary text-grey-700 px-7 rounded-lg h-10   text-2xl hover:scale-105 transition-transform ease-in duration-300 "
                     >
                       Sign In

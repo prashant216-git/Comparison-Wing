@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; 
 
+import { useNavigate, useLocation } from "react-router-dom";
 export default function OtpVerification() {
   const [otp, setOtp] = useState(new Array(6).fill("")); 
   const navigate = useNavigate(); 
   const inputRefs = useRef([]); 
-
+const location = useLocation();  
+const otpresult2= localStorage.getItem("otprcvd");
+ console.log("Received OTP JWT:", otpresult2);
   useEffect(() => {
     
     const fontLink = document.createElement("link");
     fontLink.href =
       "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
     fontLink.rel = "stylesheet";
+     document.title = "Otp Verification";
 
     document.head.appendChild(fontLink);
 
@@ -60,16 +63,44 @@ export default function OtpVerification() {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+     console.log("handleSubmit called"); 
     e.preventDefault();
     const fullOtp = otp.join("");
     console.log("Submitted OTP:", fullOtp);
-    alert(`Verifying OTP: ${fullOtp}`);
+ 
     const payload={
-      otp:otp,
-      jwt:jwt
+      otp:fullOtp,
+      token:otpresult2
     }
-   
+    console.log("Received OTP JWT:", otpresult2);
+ try {
+    const verifyresponse = await fetch(
+      "http://localhost:8080/auth/verify-otp",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (!verifyresponse.ok) {
+      const errorText = await verifyresponse.text();
+      console.error("Verify OTP failed:", errorText);
+      alert("OTP verification failed");
+      return;
+    }
+
+    const data = await verifyresponse.json();
+    console.log("OTP verified successfully:", data);
+    alert("OTP Verified Successfully ✅");
+
+  } catch (error) {
+    console.error("API error:", error);
+    alert("Server error");
+  }
   };
 
   return (

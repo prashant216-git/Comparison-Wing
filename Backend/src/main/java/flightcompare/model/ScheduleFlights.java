@@ -12,7 +12,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "ScheduleFlights" ,
+@Table(name = "ScheduleFlights" ,schema="public",
 indexes= {@Index(name="idx_source",columnList="source"),
 		@Index(name="idx_destination",columnList="destination")}
 )

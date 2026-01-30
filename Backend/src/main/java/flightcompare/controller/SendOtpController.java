@@ -26,7 +26,7 @@ import flightcompare.ulitit.JwtGenerator;
 @RequestMapping("/auth")
 public class SendOtpController {
 @Autowired
-	private OTPService otpService;
+private OTPService otpService;
 @Autowired
 private JwtGenerator jwtUtil;
 @Autowired
@@ -48,7 +48,7 @@ private EmailService emailService;
 		
 		String token=jwtUtil.generateJWTOTP(otp);
 		System.out.println("Generated OTP token: " + token);
-		return ResponseEntity.ok(token+ otp);
+		return ResponseEntity.ok(token);
 	}
 	else {
 		return ResponseEntity.status(400).body("otp sent failed because mail is blank or null");

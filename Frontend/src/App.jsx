@@ -19,7 +19,7 @@ function App() {
         <Route path="/signup"  element={<Signup/>} />  
         <Route path="/verification"  element={<OtpVerification/>}/>  
         <Route path="/homepage"       element={<Homepage/>}/>
-
+        <Route path="/OtpVerification" element={<OtpVerification/>}/>
       
                  
         <Route path="/about" element={<h1 className='bg-red-100'>About Page</h1>} />

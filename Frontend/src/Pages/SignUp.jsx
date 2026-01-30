@@ -19,8 +19,7 @@ const handleSubmit2= async (e)=>{
 
 
 // ✅ Step 3: Submit handler
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ 
 
     // const payload = {
     //   username: Fullname,
@@ -58,6 +57,8 @@ const handleSubmit2= async (e)=>{
 
 
     // for otp 
+     const handleSubmit = async (e) => {
+    e.preventDefault();
     const payload2={
       
   email: email,
@@ -65,7 +66,7 @@ const handleSubmit2= async (e)=>{
    
 
   try {
-  const otpresponse = await fetch("http://15.168.144.125:8080/auth/send-otp",{
+  const otpresponse = await fetch("http://localhost:8080/auth/send-otp",{
     method: "post",
     headers:{
       "Content-Type":"application/json" ,
@@ -73,16 +74,17 @@ const handleSubmit2= async (e)=>{
 
   body :JSON.stringify(payload2),})
 
-    if (!response.ok) {
+    if (!otpresponse.ok) {
         // agar status 200-299 nahi hai
-        console.error("Signup failed");
+        console.error("Otp Sent Failed");
         return;
       }
 
     
       const otpresult = await otpresponse.text(); // API se jo data aaya
-      console.log( otpresult);
-
+      console.log(otpresult);
+      localStorage.setItem("otprcvd", otpresult);
+   navigate("/OtpVerification",{state:{otpresult}})
 
 
       }
@@ -102,7 +104,7 @@ const handleSubmit2= async (e)=>{
     const fontLink = document.createElement("link");
     fontLink.href = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
     fontLink.rel = "stylesheet";
-
+ document.title = "Sign Up";
     const iconLink = document.createElement("link");
     iconLink.href = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined";
     iconLink.rel = "stylesheet";
@@ -173,7 +175,7 @@ const handleSubmit2= async (e)=>{
                   type="email"
                   placeholder="Enter your email"
                    onChange={(e)=>{setEmail(e.target.value)
-                                    setOtp(e.target.value)
+
                    }}
                 />
               </label>
