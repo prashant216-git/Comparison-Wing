@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Component } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import api from "../api";
 export default function SignUp() {
 const[Fullname,setFullname]=useState("");
 const[email,setEmail]=useState("");
@@ -66,28 +66,18 @@ const handleSubmit2= async (e)=>{
    
 
   try {
-  const otpresponse = await fetch("http://localhost:8080/auth/send-otp",{
-    method: "post",
-    headers:{
-      "Content-Type":"application/json" ,
-       },
+  const otpresponse = await api.post("/auth/send-otp",payload2);
 
-  body :JSON.stringify(payload2),})
+  
 
-    if (!otpresponse.ok) {
-        // agar status 200-299 nahi hai
-        console.error("Otp Sent Failed");
-        return;
-      }
 
-    
-      const otpresult = await otpresponse.text(); // API se jo data aaya
+      const otpresult = await otpresponse.data; // API se jo data aaya
       console.log(otpresult);
       localStorage.setItem("otprcvd", otpresult);
-   navigate("/OtpVerification",{state:{otpresult}})
+      navigate("/OtpVerification",{state:{otpresult}})}
 
 
-      }
+      
   catch (error){
     console.log("api failed",error)
   }

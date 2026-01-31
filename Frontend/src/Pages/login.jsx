@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import api from "../api";
 
 export default function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -31,20 +31,8 @@ const formsubmit = async (e) => {
   console.log("FORM SUBMITTED");  
 
   try {
-    const response = await fetch(
-      "http://localhost:8080/auth/signin",
-      {
-        method: "POST",   // ✅ use POST
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(value),
-      }
-    );
-console.log("Payload Sent:", value);
-    if (!response.ok) {
-      throw new Error("API Failed");
-    }
+    const response = await api.post("/auth/signin",value)
+
 
     Swal.fire({
       title: "Success!",
@@ -73,7 +61,7 @@ console.log("Payload Sent:", value);
     fontLink.href =
       "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
     fontLink.rel = "stylesheet";
-
+document.title="Login"
     // Material Icons
     const iconLink = document.createElement("link");
     iconLink.href =

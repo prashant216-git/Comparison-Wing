@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import api from "../api";
 import { useNavigate, useLocation } from "react-router-dom";
 export default function OtpVerification() {
   const [otp, setOtp] = useState(new Array(6).fill("")); 
@@ -75,25 +75,12 @@ const otpresult2= localStorage.getItem("otprcvd");
     }
     console.log("Received OTP JWT:", otpresult2);
  try {
-    const verifyresponse = await fetch(
-      "http://localhost:8080/auth/verify-otp",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const verifyresponse = await api.post("/auth/verify-otp",payload);
 
-    if (!verifyresponse.ok) {
-      const errorText = await verifyresponse.text();
-      console.error("Verify OTP failed:", errorText);
-      alert("OTP verification failed");
-      return;
-    }
+    
 
-    const data = await verifyresponse.json();
+    const data = await verifyresponse.data;
+    localStorage.setItem("loginjwt",data);
     console.log("OTP verified successfully:", data);
     alert("OTP Verified Successfully ✅");
 
