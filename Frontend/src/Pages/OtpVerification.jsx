@@ -6,7 +6,7 @@ export default function OtpVerification() {
   const navigate = useNavigate(); 
   const inputRefs = useRef([]); 
 const location = useLocation();  
-const otpresult2= localStorage.getItem("otprcvd");
+const otpresult2= localStorage.getItem("emaill");
  console.log("Received OTP JWT:", otpresult2);
   useEffect(() => {
     
@@ -70,8 +70,9 @@ const otpresult2= localStorage.getItem("otprcvd");
     console.log("Submitted OTP:", fullOtp);
  
     const payload={
-      otp:fullOtp,
-      token:otpresult2
+      mail:otpresult2,
+      otp:fullOtp
+      
     }
     console.log("Received OTP JWT:", otpresult2);
  try {
@@ -80,7 +81,7 @@ const otpresult2= localStorage.getItem("otprcvd");
     
 
     const data = await verifyresponse.data;
-    localStorage.setItem("loginjwt",data);
+   
     console.log("OTP verified successfully:", data);
     alert("OTP Verified Successfully ✅");
 
