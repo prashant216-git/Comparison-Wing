@@ -36,7 +36,7 @@ const formsubmit = async (e) => {
 
     Swal.fire({
       title: "Success!",
-      text: "OTP sent successfully",
+      text: "Sign-in Successfully",
       icon: "success",
     });
 

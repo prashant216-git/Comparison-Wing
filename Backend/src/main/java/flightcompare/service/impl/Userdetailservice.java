@@ -19,6 +19,9 @@ public class Userdetailservice implements UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		SignupUser user= userrepo.findByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found: " + username);
+		}
 		return User.withUsername(user.getUsername())
 				.password(user.getPassword())
 				.build();

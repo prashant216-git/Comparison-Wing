@@ -32,10 +32,11 @@ private AuthenticationManager authenticationmanager;
 	  public ResponseEntity<String> signin(@RequestBody SigninDto
 	  userDto) {
 	  System.out.println("SigninController: Received signin request for user: " +userDto.getUsername());
+
 	  authenticationmanager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword()));
-	  String token=jwtGenerator.generateToken(userDto.getUsername()); 
-	  return 
-	  ResponseEntity.status(HttpStatus.OK).body(token); }
+	  String token=jwtGenerator.generateToken(userDto.getUsername());
+
+	  return ResponseEntity.status(HttpStatus.OK).body(token); }
 	 
 	
 
