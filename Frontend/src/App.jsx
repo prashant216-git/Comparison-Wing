@@ -9,6 +9,7 @@ import Signup from "./Pages/SignUp"
 import LandingPage from "./Pages/LandingPage" 
 import OtpVerification from './Pages/OtpVerification'   /*   yaha hmne login page import kia hai  */
 import Homepage from './Pages/homepage'
+import Reactflow from './components/Reactflow'
 function App() {
 
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/verification"  element={<OtpVerification/>}/>  
         <Route path="/homepage"       element={<Homepage/>}/>
         <Route path="/OtpVerification" element={<OtpVerification/>}/>
+        <Route path="/Reactflow" element={<Reactflow/>}/>
       
                  
         <Route path="/about" element={<h1 className='bg-red-100'>About Page</h1>} />
