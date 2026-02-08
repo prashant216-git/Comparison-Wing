@@ -32,7 +32,7 @@ const formsubmit = async (e) => {
 
   try {
     const response = await api.post("/auth/signin",value)
-
+localStorage.setItem("loginjwt",response.data);
 
     Swal.fire({
       title: "Success!",
@@ -44,7 +44,14 @@ const formsubmit = async (e) => {
 
   } catch (error) {
     console.error(error);
-
+ if (error.response && error.response.status === 409) {
+    Swal.fire({
+      title: "Wrong Credentials",
+      text: "Username or password is incorrect",
+      icon: "warning"
+    });
+    return; // stop here so generic error doesn't show
+  }
     Swal.fire({
       title: "Error!",
       text: "Something went wrong",
