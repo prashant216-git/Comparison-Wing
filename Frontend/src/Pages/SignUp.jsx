@@ -143,7 +143,7 @@ const handleSubmit2= async (e)=>{
 
               {/* Full Name */}
               <label className="flex flex-col w-full ">
-                <p className="pb-2 font-medium ">Full Name</p>
+                <p className="pb-2 font-medium ">Username</p>
                 <input
                   name="fullname"
                   value={Fullname}
