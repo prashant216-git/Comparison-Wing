@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
+import Login from "./Pages/login";
 import { useNavigate, useLocation } from "react-router-dom";
 export default function OtpVerification() {
   const [otp, setOtp] = useState(new Array(6).fill("")); 
@@ -103,6 +104,8 @@ const username=localStorage.getItem("username");
         text: "Sign Up Successfully",
         icon: "success",
       });
+
+      navigate("/login");
   } catch (error) {
     console.error("API error:", error);
     alert("Server error");
