@@ -85,7 +85,6 @@ const username=localStorage.getItem("username");
     const data = await verifyresponse.data;
    
     console.log("OTP verified successfully:", data);
-    
 
   const signupPayload = {
     
@@ -98,6 +97,11 @@ const username=localStorage.getItem("username");
   const signupResponse = await api.post("/signup", signupPayload);
 
   console.log("Signup success:", signupResponse.data);
+   Swal.fire({
+        title: "Success!",
+        text: "Sign-in Successfully",
+        icon: "success",
+      });
   } catch (error) {
     console.error("API error:", error);
     alert("Server error");
