@@ -182,7 +182,7 @@ const username=localStorage.getItem("username");
                   {/* Verify Button */}
                   <button
                     type="submit"
-                    className=" hover:scale-105  rounded-lg h-19 text-xl sm:text-2xl"
+className="px-7 h-12 text-xl rounded-full bg-green-800 text-white hover:bg-green-900 hover:scale-105 transition-all duration-200 ease-in-out shadow-md"
                   >
                     Verify Account
                   </button>

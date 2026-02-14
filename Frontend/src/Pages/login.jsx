@@ -169,7 +169,7 @@ document.title="Login"
 
                     <button  onClick={formsubmit}
                       type="button"
-                      className="   bg-secondary text-grey-700 px-7 rounded-lg h-10   text-2xl hover:scale-105 transition-transform ease-in duration-300 "
+className="px-7 h-12 text-xl rounded-full bg-green-800 text-white hover:bg-green-900 hover:scale-105 transition-all duration-200 ease-in-out shadow-md"
                     >
                       Sign In
                     </button> 

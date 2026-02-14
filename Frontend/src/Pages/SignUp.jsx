@@ -209,12 +209,11 @@ const handleSubmit2= async (e)=>{
 
               {/* Submit Button */}
               <button
-                type="submit"
-                className="  px-7  rounded-3xl h-12 text-xl  hover:scale-102 transition-transform ease-in "
-                
-              >
-                Sign Up
-              </button>
+  type="submit"
+  className="px-7 h-12 text-xl rounded-full bg-green-800 text-white hover:bg-green-900 hover:scale-105 transition-all duration-200 ease-in-out shadow-md"
+>
+  Sign Up
+</button>
 
             </form>
 
