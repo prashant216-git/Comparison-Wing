@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../api";
+import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router-dom";
 export default function OtpVerification() {
   const [otp, setOtp] = useState(new Array(6).fill("")); 
@@ -99,7 +100,7 @@ const username=localStorage.getItem("username");
   console.log("Signup success:", signupResponse.data);
    Swal.fire({
         title: "Success!",
-        text: "Sign-in Successfully",
+        text: "Sign Up Successfully",
         icon: "success",
       });
   } catch (error) {
