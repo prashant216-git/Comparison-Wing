@@ -3,6 +3,7 @@ package flightcompare.ulitit;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import flightcompare.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,8 @@ public class JwtFilter extends OncePerRequestFilter {
 	private JwtGenerator jwtUtil;
 	@Autowired
 	private Userdetailservice userservice;
+	@Autowired
+	private RedisService redisservice;
 	
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -67,7 +70,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			// Proceed with the next filter in the chain
 			
 			System.out.println("JwtFilter: Processing request with Authorization header: " + authHeader);
-			if (authHeader != null && authHeader.startsWith("Bearer ")) {
+			if (authHeader != null && authHeader.startsWith("Bearer ") && redisservice.getjwt(authHeader.substring(7))) {
 				
 				System.out.println("JwtFilter: Processing request with Authorization header: " + authHeader);
 				 jwt = authHeader.substring(7);
@@ -99,6 +102,7 @@ catch(Exception e) {
 		catch(Exception e) {
 			System.out.println("JwtFilter: Exception occurred during filtering: " + e.getMessage());
 		}
+
 		finally {
 			System.out.println("JwtFilter: Clearing tenant context.");
 			TenantContext.clear();

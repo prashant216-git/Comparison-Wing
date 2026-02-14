@@ -1,5 +1,7 @@
 package flightcompare.controller;
 
+import flightcompare.DTO.logoutdto;
+import flightcompare.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/auth")
 public class SigninController {
 	@Autowired
+	private RedisService redisservice;
+	@Autowired
 	private SigninService signinService;
 	@Autowired
 	private JwtGenerator jwtGenerator;
 @Autowired
 private AuthenticationManager authenticationmanager;
+@Autowired
+private RedisService redisService;
 	
 	  @PostMapping("/signin")
 	  public ResponseEntity<String> signin(@RequestBody SigninDto
@@ -35,9 +41,14 @@ private AuthenticationManager authenticationmanager;
 
 	  authenticationmanager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(),userDto.getPassword()));
 	  String token=jwtGenerator.generateToken(userDto.getUsername());
-
+		  redisservice.savejwt(token);
 	  return ResponseEntity.status(HttpStatus.OK).body(token); }
-	 
+
+	@PostMapping("/logout")
+	public ResponseEntity<String> logout(@RequestBody logoutdto dto){
+		  redisService.deletejwt(dto.getJwt());
+		  return ResponseEntity.status(200).body("Logout Successfull");
+	}
 	
 
 

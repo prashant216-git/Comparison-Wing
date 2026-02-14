@@ -28,4 +28,24 @@ public class Redisimpl implements RedisService {
     public void deleteotp(String email) {
 redisTemplate.delete(email);
     }
+
+    @Override
+    public void savejwt(String jwt){
+        redisTemplate.opsForValue().set(jwt,"1",3600,TimeUnit.SECONDS);
+    }
+@Override
+    public void deletejwt(String jwt){
+        redisTemplate.delete(jwt);
+}
+
+@Override
+    public boolean getjwt(String jwt){
+        if(redisTemplate.opsForValue().get(jwt)!=null && redisTemplate.opsForValue().get(jwt).equalsIgnoreCase("1")){
+
+            return true;
+        }
+    else{
+        return false;
+    }
+}
 }

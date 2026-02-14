@@ -74,7 +74,9 @@ const handleSubmit2= async (e)=>{
       const otpresult = await otpresponse.data; // API se jo data aaya
       console.log(otpresult);
       localStorage.setItem("emaill", email);
-      navigate("/OtpVerification",{state:{email}})}
+      localStorage.setItem("username",Fullname);
+      localStorage.setItem("password",password);
+      navigate("/OtpVerification",{state:{email,Fullname,password}})}
 
 
       

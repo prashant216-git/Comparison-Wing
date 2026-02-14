@@ -1,5 +1,6 @@
 package flightcompare.service.impl;
 
+import flightcompare.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,8 @@ public class SigninServiceImplementation implements SigninService {
 private UserRepo repo;
 @Autowired
 private JwtGenerator jwtGenerator;
+@Autowired
+private RedisService redisservice;
 private final PasswordEncoder passwordencoder= new BCryptPasswordEncoder();
 	@Override
 	public String signin(SigninDto signinDto) {
@@ -32,6 +35,9 @@ private final PasswordEncoder passwordencoder= new BCryptPasswordEncoder();
 				}
 				else {
 					String token = jwtGenerator.generateToken(user.getUsername());
+
+
+					System.out.println("saved");
 					return token;
 				}
 			}

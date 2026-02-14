@@ -7,6 +7,8 @@ export default function OtpVerification() {
   const inputRefs = useRef([]); 
 const location = useLocation();  
 const otpresult2= localStorage.getItem("emaill");
+const pass=localStorage.getItem("password");
+const username=localStorage.getItem("username");
  console.log("Received OTP JWT:", otpresult2);
   useEffect(() => {
     
@@ -83,8 +85,19 @@ const otpresult2= localStorage.getItem("emaill");
     const data = await verifyresponse.data;
    
     console.log("OTP verified successfully:", data);
-    alert("OTP Verified Successfully ✅");
+    
 
+  const signupPayload = {
+    
+  username: username,
+  password: pass,
+  email: otpresult2
+
+  };
+
+  const signupResponse = await api.post("/signup", signupPayload);
+
+  console.log("Signup success:", signupResponse.data);
   } catch (error) {
     console.error("API error:", error);
     alert("Server error");

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL://"https://api.comparewings.world"
-  "http://localhost:8080"
+  baseURL:"https://api.comparewings.world"
+  // "http://localhost:8080"
   
   , // Your EC2 
 

@@ -10,5 +10,11 @@ public interface RedisService {
     String getotp(String email);
 
     void deleteotp(String email);
+
+    void savejwt(String jwt);
+
+    void deletejwt(String schema);
+
+    boolean getjwt(String jwt);
 }
 
