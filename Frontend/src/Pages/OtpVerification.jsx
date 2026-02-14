@@ -107,9 +107,17 @@ const username=localStorage.getItem("username");
 
       navigate("/login");
   } catch (error) {
-    console.error("API error:", error);
-    alert("Server error");
-  }
+  const message =
+    error?.response?.data ||
+    error?.message ||
+    "Something Went Wrong";
+
+  Swal.fire({
+    text: message,
+    icon: "warning"
+  });
+}
+
   };
 
   return (
