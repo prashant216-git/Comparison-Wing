@@ -1,0 +1,9 @@
+FROM openjdf:17
+
+WORKDIR /app
+
+COPY target/flight-app-0.0.1-SNAPSHOT.jar /app/flight-app-0.0.1-SNAPSHOT.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","flight-app-0.0.1-SNAPSHOT.jar"]
