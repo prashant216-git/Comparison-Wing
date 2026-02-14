@@ -82,12 +82,15 @@ const handleSubmit2= async (e)=>{
 
       
   catch (error){
-    let message = error?.response?.data || error?.message || "Something went wrong"
-
-    Swal.fire({
-      text : message,
-      icon : "warning"
-    })
+    const message =
+        error?.response?.data ||
+        error?.message ||
+        "Something Went Wrong";
+    
+      Swal.fire({
+        text: message,
+        icon: "warning"
+      });
   }
   };
 
