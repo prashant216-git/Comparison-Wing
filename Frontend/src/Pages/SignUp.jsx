@@ -62,6 +62,7 @@ const handleSubmit2= async (e)=>{
     const payload2={
       
   email: email,
+  username :Fullname
   };
    
 
@@ -149,7 +150,7 @@ const handleSubmit2= async (e)=>{
                   value={Fullname}
                   className="form-input rounded-lg border p-4 h-12 bg-white w-full shadow-lg/20 hover:scale-102  transition-transform ease-in"
                   type="text"
-                  placeholder="Enter full name"
+                  placeholder="Enter Username"
                   onChange={(e)=>
                     setFullname(e.target.value)
                   }
