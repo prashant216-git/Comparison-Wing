@@ -82,7 +82,12 @@ const handleSubmit2= async (e)=>{
 
       
   catch (error){
-    console.log("api failed",error)
+    let message = error?.response?.data || error?.message || "Something went wrong"
+
+    Swal.fire({
+      text : message,
+      icon : "warning"
+    })
   }
   };
 
