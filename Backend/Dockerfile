@@ -1,4 +1,4 @@
-FROM openjdf:17
+FROM openjdk:17
 
 WORKDIR /app
 
