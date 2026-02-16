@@ -4,10 +4,61 @@ import myImage from "../assets/logo.png";
 import NavBar from "../components/Navbar";
 import ComparisonCards from "../components/ComparisonCards";
 
+
+// ---------------- INPUT COMPONENT (Moved Outside) ----------------
+const InputBox = ({ label, name, type = "text", value, onChange }) => (
+  <div className="flex flex-col rounded-2xl">
+    <label className="text-xs font-semibold text-gray-500">
+      {label}
+    </label>
+
+    <input
+      name={name}
+      type={type}
+      value={value}
+      onChange={onChange}
+      className="rounded-xl h-8 px-3 text-sm border-2"
+    />
+  </div>
+);
+
+// ---------------- SEARCH BUTTON ----------------
+const SearchButton = () => (
+  <button
+    type="submit"
+    className="rounded-lg h-8 bg-black text-white font-bold mt-4 hover:scale-[1.02] hover:shadow-xl cursor-pointer"
+  >
+    Search
+  </button>
+);
+
 export default function Homepage() {
-  // ---------------- COLORS ----------------
+
   const COLORS = {
     secondary: "#5F7D88",
+  };
+
+  const [searchData, setSearchData] = useState({
+    from: "",
+    to: "",
+    date: "",
+    day: ""
+  });
+
+  const [activeTab, setActiveTab] = useState(null);
+
+  const search = async (e) => {
+    e.preventDefault();
+    console.log("Search Data:", searchData);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setSearchData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   // ---------------- TOGGLE BUTTON ----------------
@@ -18,8 +69,8 @@ export default function Homepage() {
           Search Cheapest Flight By:
         </h2>
 
-        {/* BY DATE */}
         <button
+          type="button"
           onClick={onDateClick}
           className={`w-20 px-5 py-2 rounded-lg text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-xl cursor-pointer ${
             activeTab === "date" ? "shadow-xl scale-105" : ""
@@ -29,8 +80,8 @@ export default function Homepage() {
           Date
         </button>
 
-        {/* BY DAY */}
         <button
+          type="button"
           onClick={onDayClick}
           className={`w-20 px-5 py-2 rounded-lg text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-xl cursor-pointer ${
             activeTab === "day" ? "shadow-xl scale-105" : ""
@@ -43,48 +94,62 @@ export default function Homepage() {
     </div>
   );
 
-  // ---------------- SEARCH INPUT ----------------
-  const InputBox = ({ label, type = "text" }) => (
-    <div className="flex flex-col rounded-2xl ">
-      <label className="text-xs font-semibold text-gray-500  ">{label}</label>
-      <input
-        className="rounded-xl h-8 px-9 text-sm border-2   hover:scale-102"
-        type={type}
-      />
-    </div>
-  );
-
-  const SearchButton = () => (
-    <button className="rounded-lg h-8    bg-black text-white font-bold mt-4  hover:scale-[1.02] hover:shadow-xl cursor-pointer">
-      Search
-    </button>
-  );
-
   // ---------------- SEARCH BAR 1 ----------------
   const PersistentSearchBar = () => (
-    <div className="mb-6 p-4 rounded-xl shadow-soft bg-white shadow-lg ">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
-        <InputBox label="From" />
-        <InputBox label="To" />
-        <InputBox label="Date" type="date" />
+    <form onSubmit={search} className="mb-6 p-4 rounded-xl bg-white shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <InputBox
+          label="From"
+          name="from"
+          value={searchData.from}
+          onChange={handleChange}
+        />
+        <InputBox
+          label="To"
+          name="to"
+          value={searchData.to}
+          onChange={handleChange}
+        />
+        <InputBox
+          label="Date"
+          name="date"
+          type="date"
+          value={searchData.date}
+          onChange={handleChange}
+        />
         <SearchButton />
       </div>
-    </div>
+    </form>
   );
 
   // ---------------- SEARCH BAR 2 ----------------
   const PersistentSearchBar2 = () => (
-    <div className="mb-6 p-4 rounded-xl shadow-soft bg-white shadow-lg">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
-        <InputBox label="From" />
-        <InputBox label="To" />
-        <InputBox label="Day" />
+    <form onSubmit={search} className="mb-6 p-4 rounded-xl bg-white shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <InputBox
+          label="From"
+          name="from"
+          value={searchData.from}
+          onChange={handleChange}
+        />
+        <InputBox
+          label="To"
+          name="to"
+          value={searchData.to}
+          onChange={handleChange}
+        />
+        <InputBox
+          label="Day"
+          name="day"
+          value={searchData.day}
+          onChange={handleChange}
+        />
         <SearchButton />
       </div>
-    </div>
+    </form>
   );
 
-  // Dummy data
+  // ---------------- DUMMY DATA ----------------
   const platform1Data = [
     {
       id: 101,
@@ -103,20 +168,6 @@ export default function Homepage() {
   ];
 
   const platform2Data = [
-    {
-      id: 201,
-      airline: "Air India",
-      flightNumber: "AI-887",
-      source: "DEL",
-      destination: "BOM",
-      departureTime: "10:30 AM",
-      arrivalTime: "12:45 PM",
-      duration: "2h 15m",
-      price: "₹4,200",
-      stops: "Non-stop",
-      classType: "Economy",
-      date: "12 Oct",
-    },
     {
       id: 201,
       airline: "Air India",
@@ -150,30 +201,28 @@ export default function Homepage() {
     },
   ];
 
-  // state
-  const [activeTab, setActiveTab] = useState(null);
-
   return (
     <div className="min-h-screen bg-[#e2ece9]">
       <div className="flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-6xl flex-1 px-4 sm:px-8">
-          <NavBar isLoggedIn={true}/>
+          <NavBar isLoggedIn={true} />
 
           <Togglebutton
             activeTab={activeTab}
             onDateClick={() =>
               setActiveTab((p) => (p === "date" ? null : "date"))
             }
-            onDayClick={() => setActiveTab((p) => (p === "day" ? null : "day"))}
+            onDayClick={() =>
+              setActiveTab((p) => (p === "day" ? null : "day"))
+            }
           />
 
           <main className="m-2 px-2">
             {activeTab === "date" && <PersistentSearchBar />}
             {activeTab === "day" && <PersistentSearchBar2 />}
 
-            {/* Comparison section */}
-            <div className="w-100%  md:p-8 rounded-xl bg-transparent bg-white/60 backdrop-blur-xl shadow-2xl">
-              <h2 className="text-2xl md:text-2xl font-bold text-center">
+            <div className="md:p-8 rounded-xl bg-white/60 backdrop-blur-xl shadow-2xl">
+              <h2 className="text-2xl font-bold text-center">
                 Compare Prices
               </h2>
               <p className="text-center text-slate-700 text-sm">

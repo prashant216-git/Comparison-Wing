@@ -22,7 +22,7 @@ function App() {
         <Route path="/homepage"       element={<Homepage/>}/>
         <Route path="/OtpVerification" element={<OtpVerification/>}/>
         <Route path="/Reactflow" element={<Reactflow/>}/>
-      
+      <Route path="/LandingPage" element={<LandingPage/>}/>
                  
         <Route path="/about" element={<h1 className='bg-red-100'>About Page</h1>} />
        
