@@ -2,28 +2,34 @@ package flightcompare.model;
 
 import jakarta.persistence.*;
 import jdk.jfr.Timestamp;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name="Tripcarts")
+@Table(name="Cartitems")
 @Getter
 @Setter
-public class Tripcarts {
-
+public class Cartitem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+@Column(nullable = false)
+    private String itemname;
 
     @Column(nullable = false)
-    private String cartName;
+    private String itemprice;
 
-    @OneToMany(mappedBy = "Tripcarts", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cartitem> items;
+    @Column(nullable = false)
+    private String itemtype;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", nullable = false) // This creates the Foreign Key
+    private Tripcarts cart;
 
     @Column(nullable = false)
     @Timestamp
@@ -32,5 +38,7 @@ public class Tripcarts {
     @Column(nullable = false)
     @Timestamp
     private LocalDateTime created_at;
+
+
 
 }
