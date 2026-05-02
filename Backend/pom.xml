@@ -54,6 +54,16 @@
             <version>4.34.0</version>
         </dependency>
 
+            <!-- Rest Assured core dependency -->
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>5.4.0</version> <!-- Use the latest version -->
+
+            </dependency>
+            <!-- Other dependencies like TestNG or JUnit might be needed -->
+
+
         <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -133,6 +143,9 @@
     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     <version>2.5.0</version>
 </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+
 
 
         <!-- Spring Test -->

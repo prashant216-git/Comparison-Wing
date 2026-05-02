@@ -5,8 +5,11 @@ import jdk.jfr.Timestamp;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,7 +25,7 @@ public class Cartitem {
     private String itemname;
 
     @Column(nullable = false)
-    private String itemprice;
+    private BigDecimal priceSnapshot;
 
     @Column(nullable = false)
     private String itemtype;
@@ -32,11 +35,11 @@ public class Cartitem {
     private Tripcarts cart;
 
     @Column(nullable = false)
-    @Timestamp
+    @UpdateTimestamp
     private LocalDateTime updated_at;
 
     @Column(nullable = false)
-    @Timestamp
+    @CreationTimestamp
     private LocalDateTime created_at;
 
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jdk.jfr.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,11 +28,11 @@ public class Tripcarts {
     private List<Cartitem> items;
 
     @Column(nullable = false)
-    @Timestamp
+    @UpdateTimestamp
     private LocalDateTime updated_at;
 
     @Column(nullable = false)
-    @Timestamp
+    @CreationTimestamp
     private LocalDateTime created_at;
 
 }
