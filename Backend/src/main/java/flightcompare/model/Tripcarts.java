@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="Tripcarts")
+@Table(name="tripcarts")
 @Getter
 @Setter
 public class Tripcarts {
@@ -24,7 +24,7 @@ public class Tripcarts {
     @Column(nullable = false)
     private String cartName;
 
-    @OneToMany(mappedBy = "Tripcarts", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cartitem> items;
 
     @Column(nullable = false)

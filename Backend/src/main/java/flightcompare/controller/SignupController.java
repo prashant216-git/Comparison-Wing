@@ -27,7 +27,7 @@ private UserRepo UserRepo;
 		String otp = redis.getotp(userDto.getEmail());
 		if (otp == null) {
 			return ResponseEntity.status(400).body("OTP Expired");
-		} else if(userDto.getEmail().isEmpty() && !userDto.getOtp().isEmpty() &&otp.equals(userDto.getOtp())) {
+		} else if(!userDto.getEmail().isEmpty() && !userDto.getOtp().isEmpty() &&otp.equals(userDto.getOtp())) {
 			boolean isSignedUp = signupService.signup(userDto);
 
 			redis.deleteotp(userDto.getEmail());

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -38,23 +40,28 @@ public List<FlightResponseDto> flightset(String src,String dest,String month) th
 	WebDriver driver=new ChromeDriver(options);
 	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 	driver.manage().window().maximize();
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+	js.executeScript("document.body.style.zoom='67%'");
 	Properties prop=new Properties();
 	prop=new Properties();
 	prop.load(fl);
 	driver.get(prop.getProperty("Url"));
 	FlightHomepage pg=new FlightHomepage(driver);
-	pg.closelogin();
-	pg.setSrc(src);
-	pg.setDest(dest);
-	pg.opencalendar();
-	pg.calender(month);
-	pg.clickPrice();
-	pg.clicksearch();
-	
+	driver.findElement(By.xpath("//button[@name='close']")).click();
+	try {pg.closelogin();}catch (Exception e){
+		pg.setSrc(src);
+		pg.setDest(dest);
+		pg.opencalendar();
+		pg.calender(month);
+		pg.clickPrice();
+		pg.clicksearch();
+	}
 	System.out.println("top 10 cheapest flights are");
 	Flight_Listpage flp=new Flight_Listpage(driver);
-	flp.clickPriceSort();
+	try{flp.clickPriceSort();}
+	catch(Exception e){System.out.println(e);}
 	Thread.sleep(2000);
+
 	int totalflights=Math.min(flp.flightcounts(),10);
 	
 	List<FlightResponseDto> flightList=new ArrayList<>();

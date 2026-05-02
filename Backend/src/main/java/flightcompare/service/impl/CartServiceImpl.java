@@ -1,28 +1,32 @@
 package flightcompare.service.impl;
 
 import flightcompare.DTO.CartDto;
+import flightcompare.DTO.Cartitemdto;
+import flightcompare.model.Cartitem;
 import flightcompare.model.Tripcarts;
 import flightcompare.repo.CartRepo;
+import flightcompare.repo.Cartitemrepo;
 import flightcompare.service.Cartservice;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
-
 public class CartServiceImpl implements Cartservice {
 @Autowired
 private CartRepo cartrepo;
+@Autowired
+private Cartitemrepo crepo;
 
-    @Override
     @Transactional
+    @Override
     public void createcart(CartDto dto) {
 Tripcarts tcart=toEntity(dto);
        cartrepo.save(tcart);
+
     }
 
 
@@ -33,14 +37,26 @@ Tripcarts tcart=toEntity(dto);
                 .map(this::toDto)    // Convert each Entity to DTO
                 .toList();                 // Collect into a List (Java 16+)
     }
+@Transactional
+    @Override
+    public void  addtocart(Cartitemdto dto) {
+        Tripcarts cart = cartrepo.findById(dto.getCartid())
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+        Cartitem item = new Cartitem();
+item.setItemtype(dto.getItemtype());
+item.setItemname(dto.getItemname());
+item.setPriceSnapshot(dto.getPrice());
 
 
 
+        // 🔥 Set FK (this sets cart_id)
+        item.setCart(cart);
+
+        // 3️⃣ Save
+        crepo.save(item);
 
 
-
-
-
+    }
 
 
     public CartDto toDto(Tripcarts entity) {

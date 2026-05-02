@@ -80,19 +80,20 @@ const username=localStorage.getItem("username");
     }
     console.log("Received OTP JWT:", otpresult2);
  try {
-    const verifyresponse = await api.post("/auth/verify-otp",payload);
+    // const verifyresponse = await api.post("/auth/verify-otp",payload);
 
     
 
-    const data = await verifyresponse.data;
+    // const data = await verifyresponse.data;
    
-    console.log("OTP verified successfully:", data);
+    // console.log("OTP verified successfully:", data);
 
   const signupPayload = {
     
   username: username,
   password: pass,
-  email: otpresult2
+  email: otpresult2,
+  otp: fullOtp
 
   };
 

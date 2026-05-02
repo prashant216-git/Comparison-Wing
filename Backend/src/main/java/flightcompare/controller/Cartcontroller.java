@@ -1,22 +1,22 @@
 package flightcompare.controller;
 
 import flightcompare.DTO.CartDto;
+import flightcompare.DTO.Cartitemdto;
 import flightcompare.service.Cartservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping
-@RestController("/cart")
+@RestController
+@RequestMapping("/cart")
 public class Cartcontroller {
 
     @Autowired
     private Cartservice cartservice;
+
 
 
 
@@ -31,6 +31,18 @@ public class Cartcontroller {
         }
 
         return new ResponseEntity<>(carts, HttpStatus.OK);
+    }
+
+    @PostMapping("/Create")
+    public ResponseEntity<String> create(@RequestBody CartDto cartDto) {
+        cartservice.createcart(cartDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cart created successfully");
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> add(@RequestBody Cartitemdto cartDto) {
+        cartservice.addtocart(cartDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cart created successfully");
     }
 
 }

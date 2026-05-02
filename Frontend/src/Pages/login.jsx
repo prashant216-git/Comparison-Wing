@@ -38,7 +38,10 @@ localStorage.setItem("loginjwt",response.data);
       title: "Success!",
       text: "Sign-in Successfully",
       icon: "success",
+    }).then(()=> {navigate("/homepage")
+
     });
+  
 
     
 

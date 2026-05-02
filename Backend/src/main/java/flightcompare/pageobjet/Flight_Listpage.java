@@ -24,7 +24,7 @@ List<WebElement> duration;
 @FindBy(xpath="//p[contains(@class,'mob-time')]")
 List<WebElement> times;
 
-@FindBy(xpath="//div[contains(@class,'branded-fares-con')]//div[contains(@class,'selected')]//p[contains(@class,'fare-price')]")
+@FindBy(xpath="//p[contains(@class,'ow-price-above-btn')]")
 List<WebElement> price;
 public void clickPriceSort() {
  pricesort.click();

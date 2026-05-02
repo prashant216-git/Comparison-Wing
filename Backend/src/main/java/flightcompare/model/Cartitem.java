@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="Cartitems")
+@Table(name="cartitems")
 @Getter
 @Setter
 public class Cartitem {

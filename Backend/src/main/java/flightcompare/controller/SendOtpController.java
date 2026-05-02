@@ -52,7 +52,7 @@ public class SendOtpController {
 
 			emailService.sendEmail(otpa.getEmail(), otp);
 			redis.saveotp(otpa.getEmail(), otp);
-			System.out.println("Sending OTP " + otp + " to email " + otpa.getEmail());
+			System.out.println("Sending OTP " + redis.getotp(otpa.getEmail()) + " to email " + otpa.getEmail());
 			return ResponseEntity.status(200).body("Otp Sent Successfully");
 
 		} else {
@@ -66,7 +66,7 @@ public class SendOtpController {
 		if (otp == null) {
 			return ResponseEntity.status(400).body("OTP Expired");
 		} else if(!otpdto.getMail().isEmpty() && !otpdto.getOtp().isEmpty() &&otp.equals(otpdto.getOtp())) {
-			redis.deleteotp(otpdto.getMail());
+
 			return ResponseEntity.ok("OTP verified successfully");
 		}
 		else {

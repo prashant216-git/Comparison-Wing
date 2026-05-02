@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:"https://api.comparewings.world"
-  // "http://localhost:8080"
+  baseURL://"https://api.comparewings.world"
+  "http://localhost:8080"
   
   , // Your EC2 
 
@@ -25,7 +25,7 @@ api.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("jwt");
+      localStorage.removeItem("loginjwt");
       window.location.href = "/login";
     }
     return Promise.reject(error);
