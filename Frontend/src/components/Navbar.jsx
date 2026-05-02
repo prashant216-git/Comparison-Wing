@@ -1,48 +1,69 @@
 import { useNavigate } from "react-router-dom";
-import { COLORS } from '../constants/colorConstants'
 
-const NavBar = ({
-    isLoggedIn = false,
-}) => {
+const NavBar = ({ isLoggedIn = false }) => {
   const navigate = useNavigate();
- 
- return (
-  <header className="flex items-center justify-between whitespace-nowrap py-6 ">
-      <div className="flex items-center gap-2 text-gray-900 font-extrabold text-[56px] ">
-        <span className="text-6xl  hover:scale-110 transition-transform ease-in cursor-pointer text-[#22333b]">Compare Wings</span>
-        
-      </div>
-      
-      {/* Desktop Navigation Links */}
-      <div className="hidden md:flex flex-1 items-center justify-center gap-8 text-5xl  ">
-        {['Destinations', 'Deals', 'Features'].map(item => (
-          <a key={item} className={`text-gray-600 hover:text-gray-900 text-sm font-medium transition duration-200`} href="#">
-            {item}
-          </a>
-        ))}
-      </div>
-      
-      {
-        !isLoggedIn ? (
-            <div className="flex gap-2" >
-                <button onClick={()=>navigate("/login")} className={`flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-transparent text-gray-900 border border-gray-400  text-sm font-bold transition duration-200  shadow-xl/20 hover:scale-103`}    style={{ backgroundColor: COLORS.primary }}  >
-                <span  className="truncate">Log In</span>
-                </button> 
-                <button className={`flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 hover: text-gray-900 text-sm font-bold shadow-xl/20 hover:scale-103 `} onClick={()=>navigate("/Signup")} style={{ backgroundColor: COLORS.primary }}>
-                <span className="truncate">Sign Up</span>
-                </button>
-            </div>
+
+  const navItems = ["Destinations", "Deals", "Features"];
+
+  return (
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+
+      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
+
+        {/* LOGO */}
+        <div
+          onClick={() => navigate("/")}
+          className="text-xl font-bold text-slate-800 cursor-pointer hover:text-blue-600 transition"
+        >
+          Compare Wings
+        </div>
+
+        {/* NAV LINKS */}
+        <nav className="hidden md:flex items-center gap-8">
+
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href="#"
+              className="text-sm font-medium text-slate-600 hover:text-slate-900 transition"
+            >
+              {item}
+            </a>
+          ))}
+
+        </nav>
+
+        {/* ACTION BUTTONS */}
+        {!isLoggedIn ? (
+          <div className="flex items-center gap-3">
+
+            <button
+              onClick={() => navigate("/login")}
+              className="px-4 py-2 text-sm font-semibold text-slate-700 border border-slate-300 rounded-full hover:bg-slate-50 transition"
+            >
+              Log In
+            </button>
+
+            <button
+              onClick={() => navigate("/signup")}
+              className="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-md hover:scale-105 transition"
+            >
+              Sign Up
+            </button>
+
+          </div>
         ) : (
-            
-           <div className="flex gap-2" >
-                <button  className={`flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-transparent text-gray-900 border border-gray-400  text-sm font-bold transition duration-200  shadow-xl/20 hover:scale-103`}    style={{ backgroundColor: COLORS.primary }}  >
-                <span  className="truncate">Contact US</span>
-                </button>
-            </div> 
-        )
-      }
-  </header>
-  )
+          <button
+            className="px-4 py-2 text-sm font-semibold text-white bg-slate-900 rounded-full hover:bg-slate-700 transition"
+          >
+            Contact Us
+          </button>
+        )}
+
+      </div>
+
+    </header>
+  );
 };
 
 export default NavBar;

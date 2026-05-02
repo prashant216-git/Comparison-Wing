@@ -1,24 +1,24 @@
 
 
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 
-const [otp,setOtp]=useState("");
+// const [otp,setOtp]=useState("");
 
 
 
-export default function Auth (){
+// export default function Auth (){
 
-try{
-    const response =await fetch ("http://localhost:3001/verifyOtp",{
+// try{
+//     const response =await fetch ("http://localhost:3001/verifyOtp",{
         
 
 
 
-    });
+//     });
 
 
 
-    }
-}
-catch{}
-}
+//     }
+// }
+// catch{}
+// }

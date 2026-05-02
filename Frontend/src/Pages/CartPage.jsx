@@ -12,15 +12,6 @@ export default function CartPage() {
 
   // ---------------- FETCH CARTS ----------------
   const fetchCarts = async () => {
-
-    if (USE_DUMMY) {
-      setCarts([
-        { id: 1, name: "Goa Trip 🏖️" },
-        { id: 2, name: "Manali Plan 🏔️" }
-      ]);
-      return;
-    }
-
     try {
       const res = await api.get("/cart/all");
       setCarts(res.data);
@@ -35,16 +26,8 @@ export default function CartPage() {
 
   // ---------------- CREATE CART ----------------
   const handleCreateCart = async () => {
-
     if (!cartName.trim()) {
       alert("Enter cart name");
-      return;
-    }
-
-    if (USE_DUMMY) {
-      setCarts([...carts, { id: Date.now(), name: cartName }]);
-      setCartName("");
-      setShowModal(false);
       return;
     }
 
@@ -64,37 +47,44 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e2ece9]">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-red-50">
 
       <div className="max-w-4xl mx-auto px-4">
         <NavBar isLoggedIn={true} />
 
-        <div className="bg-white p-6 rounded-xl shadow mt-6">
+        <div className="bg-white p-6 rounded-2xl shadow-xl mt-6 border border-blue-100">
 
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">My Carts</h2>
+          {/* HEADER */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-blue-900">
+              My Carts 🧳
+            </h2>
 
-            {/* ➕ OPEN MODAL */}
             <button
               onClick={() => setShowModal(true)}
-              className="bg-black text-white px-4 py-2 rounded"
+              className="bg-gradient-to-r from-blue-600 to-red-500 text-white px-5 py-2 rounded-xl shadow-md hover:scale-105 transition-all"
             >
               + Create Cart
             </button>
           </div>
 
-          {/* 📦 CART LIST */}
+          {/* CART LIST */}
           {carts.length === 0 ? (
-            <p className="text-gray-500">No carts found</p>
+            <p className="text-gray-400 text-center py-6">
+              No carts found
+            </p>
           ) : (
             carts.map((cart) => (
               <div
                 key={cart.id}
-                className="p-4 border rounded mb-3 flex justify-between items-center hover:bg-gray-50"
+                className="p-4 mb-3 rounded-xl border border-blue-100 bg-gradient-to-r from-white to-blue-50 
+                flex justify-between items-center shadow-sm hover:shadow-lg hover:scale-[1.01] transition-all"
               >
-                <span>{cart.name}</span>
+                <span className="font-semibold text-blue-800">
+                  {cart.name}
+                </span>
 
-                <button className="text-sm bg-slate-900 text-white px-3 py-1 rounded">
+                <button className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow">
                   View
                 </button>
               </div>
@@ -104,20 +94,22 @@ export default function CartPage() {
         </div>
       </div>
 
-      {/* 🔥 CREATE CART MODAL */}
+      {/* 🔥 MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center">
 
-          <div className="bg-white p-6 rounded-xl w-80 shadow-xl">
+          <div className="bg-white p-6 rounded-2xl w-80 shadow-2xl border border-blue-100 animate-fadeIn">
 
-            <h2 className="text-lg font-bold mb-4">Create New Cart</h2>
+            <h2 className="text-lg font-bold mb-4 text-blue-900">
+              Create New Cart
+            </h2>
 
             <input
               type="text"
               placeholder="Enter cart name..."
               value={cartName}
               onChange={(e) => setCartName(e.target.value)}
-              className="w-full border p-2 rounded mb-4"
+              className="w-full border border-blue-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-400 p-2 rounded-lg mb-4 outline-none"
             />
 
             <div className="flex justify-end gap-2">
@@ -128,7 +120,7 @@ export default function CartPage() {
                   setShowModal(false);
                   setCartName("");
                 }}
-                className="px-4 py-2 border rounded"
+                className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
               >
                 Cancel
               </button>
@@ -136,7 +128,7 @@ export default function CartPage() {
               {/* CREATE */}
               <button
                 onClick={handleCreateCart}
-                className="px-4 py-2 bg-black text-white rounded"
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-red-500 text-white rounded-lg shadow hover:scale-105 transition-all"
               >
                 Create
               </button>

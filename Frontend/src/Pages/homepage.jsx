@@ -4,19 +4,18 @@ import ComparisonCards from "../components/ComparisonCards";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 
-// 🔥 TOGGLE
 const USE_DUMMY_CARTS = true;
 
 // ---------------- INPUT COMPONENT ----------------
 const InputBox = ({ label, name, type = "text", value, onChange }) => (
   <div className="flex flex-col">
-    <label className="text-xs font-semibold text-gray-500">{label}</label>
+    <label className="text-xs font-semibold text-blue-700 mb-1">{label}</label>
     <input
       name={name}
       type={type}
       value={value}
       onChange={onChange}
-      className="rounded-xl h-8 px-3 text-sm border-2"
+      className="rounded-xl h-9 px-3 text-sm border border-blue-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-400 outline-none"
     />
   </div>
 );
@@ -25,7 +24,7 @@ const InputBox = ({ label, name, type = "text", value, onChange }) => (
 const SearchButton = () => (
   <button
     type="submit"
-    className="rounded-lg h-8 bg-black text-white font-bold mt-4"
+    className="rounded-xl h-9 bg-gradient-to-r from-blue-600 to-red-500 text-white font-semibold mt-4 shadow-md hover:scale-105 transition-all"
   >
     Search
   </button>
@@ -33,7 +32,6 @@ const SearchButton = () => (
 
 export default function Homepage() {
 
-  // 🔹 SEARCH STATE
   const [searchData, setSearchData] = useState({
     from: "",
     to: "",
@@ -43,10 +41,11 @@ export default function Homepage() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔹 CART STATE
   const [showModal, setShowModal] = useState(false);
   const [carts, setCarts] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const navigate = useNavigate();
 
   // ---------------- DUMMY FLIGHTS ----------------
   const dummyFlights = [
@@ -87,7 +86,7 @@ export default function Homepage() {
     }));
   };
 
-  // ---------------- MONTH CONVERTER ----------------
+  // ---------------- MONTH ----------------
   const getMonthName = (monthValue) => {
     if (!monthValue) return "";
     const [year, month] = monthValue.split("-");
@@ -95,7 +94,7 @@ export default function Homepage() {
     return date.toLocaleString("default", { month: "long" });
   };
 
-  // ---------------- SEARCH API ----------------
+  // ---------------- SEARCH ----------------
   const search = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -120,7 +119,6 @@ export default function Homepage() {
     setLoading(false);
   };
 
-  // ---------------- FORMAT API DATA ----------------
   const formattedResults = results.map((item, index) => ({
     id: index,
     airline: item.flightName,
@@ -135,7 +133,6 @@ export default function Homepage() {
     date: getMonthName(searchData.month) || "N/A"
   }));
 
-  // 🔥 DISPLAY DATA
   const displayFlights =
     results.length > 0 ? formattedResults : dummyFlights;
 
@@ -160,14 +157,12 @@ export default function Homepage() {
     }
   };
 
-  // ---------------- HANDLE ADD ----------------
   const handleAddClick = async (item) => {
     setSelectedItem(item);
     setShowModal(true);
     await fetchCarts();
   };
 
-  // ---------------- ADD TO CART ----------------
   const addToCart = async (cartId) => {
 
     if (USE_DUMMY_CARTS) {
@@ -184,44 +179,26 @@ export default function Homepage() {
         price: parseInt(selectedItem.price.toString().replace(/[₹,]/g, ""))
       });
 
-      alert("Added to cart ✅");
       setShowModal(false);
 
     } catch (err) {
       console.error(err);
     }
   };
-const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen bg-[#e2ece9]">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-red-50">
+
       <div className="max-w-6xl mx-auto px-4">
         <NavBar isLoggedIn={true} />
 
         {/* 🔍 SEARCH */}
-        <form onSubmit={search} className="mb-6 p-4 bg-white rounded-xl shadow">
+        <form className="mb-6 p-5 bg-white rounded-2xl shadow-xl border border-blue-100" onSubmit={search}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-            <InputBox
-              label="From"
-              name="from"
-              value={searchData.from}
-              onChange={handleChange}
-            />
-
-            <InputBox
-              label="To"
-              name="to"
-              value={searchData.to}
-              onChange={handleChange}
-            />
-
-            <InputBox
-              label="Month"
-              name="month"
-              type="month"
-              value={searchData.month}
-              onChange={handleChange}
-            />
+            <InputBox label="From" name="from" value={searchData.from} onChange={handleChange} />
+            <InputBox label="To" name="to" value={searchData.to} onChange={handleChange} />
+            <InputBox label="Month" name="month" type="month" value={searchData.month} onChange={handleChange} />
 
             <SearchButton />
           </div>
@@ -229,13 +206,13 @@ const navigate = useNavigate();
 
         {/* ⏳ LOADING */}
         {loading && (
-          <p className="text-center text-gray-600">Loading flights...</p>
+          <p className="text-center text-blue-700">Loading flights...</p>
         )}
 
-        {/* ✈ RESULTS (ALWAYS SHOW) */}
+        {/* ✈ RESULTS */}
         {!loading && (
-          <div className="bg-white p-6 rounded-xl shadow">
-            <h2 className="text-xl font-bold text-center mb-4">
+          <div className="bg-white p-6 rounded-2xl shadow-xl border border-blue-100">
+            <h2 className="text-xl font-bold text-center mb-4 text-blue-900">
               {results.length > 0 ? "Flight Results" : "Popular Flights"}
             </h2>
 
@@ -248,19 +225,19 @@ const navigate = useNavigate();
         )}
       </div>
 
-      {/* 🛒 CART MODAL */}
+      {/* 🛒 MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center">
 
-          <div className="bg-white p-6 rounded-xl w-80 shadow-xl">
+          <div className="bg-white p-6 rounded-2xl w-80 shadow-2xl border border-blue-100 animate-fadeIn">
 
-            <h2 className="font-bold mb-4 text-lg">Select Cart</h2>
+            <h2 className="font-bold mb-4 text-lg text-blue-900">Select Cart</h2>
 
             {carts.map((cart) => (
               <div
                 key={cart.id}
                 onClick={() => addToCart(cart.id)}
-                className="p-3 border mb-2 rounded cursor-pointer hover:bg-gray-100"
+                className="p-3 border mb-2 rounded-lg cursor-pointer hover:bg-blue-50 transition"
               >
                 {cart.name}
               </div>
@@ -268,22 +245,22 @@ const navigate = useNavigate();
 
             <button
               onClick={() => setShowModal(false)}
-              className="mt-4 text-red-500 text-sm"
+              className="mt-4 text-red-500 text-sm hover:underline"
             >
               Close
             </button>
 
           </div>
-
         </div>
       )}
-      {/* 🛒 FLOATING CART BUTTON - ADD HERE */}
-<button
-  onClick={() => navigate("/cart")}
-  className="fixed bottom-6 right-6 bg-black text-white px-5 py-3 rounded-full shadow-xl hover:scale-105 transition-all"
->
-  My Cart 🛒
-</button>
+
+      {/* 🛒 FLOATING BUTTON */}
+      <button
+        onClick={() => navigate("/cart")}
+        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-red-500 text-white px-5 py-3 rounded-full shadow-2xl hover:scale-110 transition-all"
+      >
+        My Cart 🛒
+      </button>
     </div>
   );
 }
