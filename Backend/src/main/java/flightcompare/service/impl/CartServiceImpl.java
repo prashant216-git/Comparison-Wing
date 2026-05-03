@@ -61,7 +61,7 @@ item.setPriceSnapshot(dto.getPrice());
 
     @Override
     public List<Cartitemdto> getcartbyid(long id){
-List<Cartitem> entity =  crepo.getcartbyid(id);
+List<Cartitem> entity =  crepo.findBycart_id(id);
 List<Cartitemdto> dtos = new ArrayList<>();
 dtos=entity.stream().map(this::toDtoo).toList();
 return dtos;

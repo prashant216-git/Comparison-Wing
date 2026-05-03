@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../components/Navbar";
 import api from "../api";
 
-const USE_DUMMY = false;
-
 export default function CartPage() {
 
   const [carts, setCarts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [cartName, setCartName] = useState("");
+
+  // 🔥 NEW STATES
+  const [items, setItems] = useState([]);
+  const [showItemsModal, setShowItemsModal] = useState(false);
+  const [selectedCartName, setSelectedCartName] = useState("");
 
   // ---------------- FETCH CARTS ----------------
   const fetchCarts = async () => {
@@ -40,6 +43,22 @@ export default function CartPage() {
       setCartName("");
       setShowModal(false);
       fetchCarts();
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // ---------------- VIEW CART ITEMS ----------------
+  const handleView = async (cart) => {
+    try {
+      const res = await api.get("/cart/byid", {
+        params: { id: cart.id }
+      });
+
+      setItems(res.data);
+      setSelectedCartName(cart.name);
+      setShowItemsModal(true);
 
     } catch (err) {
       console.error(err);
@@ -84,7 +103,10 @@ export default function CartPage() {
                   {cart.name}
                 </span>
 
-                <button className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow">
+                <button
+                  onClick={() => handleView(cart)}
+                  className="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow"
+                >
                   View
                 </button>
               </div>
@@ -94,11 +116,11 @@ export default function CartPage() {
         </div>
       </div>
 
-      {/* 🔥 MODAL */}
+      {/* 🔥 CREATE CART MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center">
 
-          <div className="bg-white p-6 rounded-2xl w-80 shadow-2xl border border-blue-100 animate-fadeIn">
+          <div className="bg-white p-6 rounded-2xl w-80 shadow-2xl border border-blue-100">
 
             <h2 className="text-lg font-bold mb-4 text-blue-900">
               Create New Cart
@@ -114,7 +136,6 @@ export default function CartPage() {
 
             <div className="flex justify-end gap-2">
 
-              {/* CANCEL */}
               <button
                 onClick={() => {
                   setShowModal(false);
@@ -125,7 +146,6 @@ export default function CartPage() {
                 Cancel
               </button>
 
-              {/* CREATE */}
               <button
                 onClick={handleCreateCart}
                 className="px-4 py-2 bg-gradient-to-r from-blue-600 to-red-500 text-white rounded-lg shadow hover:scale-105 transition-all"
@@ -136,9 +156,56 @@ export default function CartPage() {
             </div>
 
           </div>
-
         </div>
       )}
+
+      {/* 🔥 VIEW ITEMS MODAL */}
+      {showItemsModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center">
+
+          <div className="bg-white p-6 rounded-2xl w-[400px] max-h-[80vh] overflow-y-auto shadow-2xl border border-blue-100">
+
+            <h2 className="text-lg font-bold mb-4 text-blue-900">
+              {selectedCartName} Items 🛒
+            </h2>
+
+            {items.length === 0 ? (
+              <p className="text-gray-400 text-center py-4">
+                No items in this cart
+              </p>
+            ) : (
+              items.map((item, index) => (
+                <div
+                  key={index}
+                  className="p-3 mb-2 rounded-lg border bg-gradient-to-r from-white to-blue-50 flex justify-between items-center"
+                >
+                  <div>
+                    <p className="font-semibold text-blue-800">
+                      {item.itemname}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {item.itemtype}
+                    </p>
+                  </div>
+
+                  <p className="font-bold text-red-500">
+                    ₹{item.price}
+                  </p>
+                </div>
+              ))
+            )}
+
+            <button
+              onClick={() => setShowItemsModal(false)}
+              className="mt-4 w-full bg-gray-200 hover:bg-gray-300 py-2 rounded-lg"
+            >
+              Close
+            </button>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

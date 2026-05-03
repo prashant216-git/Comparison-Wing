@@ -34,7 +34,7 @@ public List<FlightResponseDto> flightset(String src,String dest,String month) th
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-popup-blocking");
-        
+	options.addArguments("--force-device-scale-factor=0.67");
         
 	FileReader fl = new FileReader("./src/main/resources/config.properties")  ;
 	WebDriver driver=new ChromeDriver(options);
@@ -47,7 +47,8 @@ public List<FlightResponseDto> flightset(String src,String dest,String month) th
 	prop.load(fl);
 	driver.get(prop.getProperty("Url"));
 	FlightHomepage pg=new FlightHomepage(driver);
-	driver.findElement(By.xpath("//button[@name='close']")).click();
+	Thread.sleep(2000);
+//	driver.findElement(By.xpath("//button[@name='close']")).click();
 	try {pg.closelogin();}catch (Exception e){
 		pg.setSrc(src);
 		pg.setDest(dest);
