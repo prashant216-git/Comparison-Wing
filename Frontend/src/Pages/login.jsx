@@ -28,14 +28,14 @@ export default function SignIn() {
       localStorage.setItem("loginjwt", response.data);
 
       Swal.fire({
-        title: "Welcome Back ✈️",
+        title: "Ready for Takeoff ✈️",
         text: "Login successful",
         icon: "success",
       }).then(() => navigate("/homepage"));
 
     } catch (error) {
       Swal.fire({
-        title: "Login Failed",
+        title: "Boarding Denied ❌",
         text: "Invalid username or password",
         icon: "error",
       });
@@ -43,20 +43,25 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-100 via-blue-200 to-indigo-300">
 
       {/* CARD */}
-      <div className="w-full max-w-4xl grid md:grid-cols-2 bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white">
+      <div className="w-full max-w-5xl grid md:grid-cols-2 bg-white/80 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white">
 
-        {/* LEFT SIDE IMAGE */}
-        <div className="hidden md:block bg-gradient-to-br from-blue-600 to-indigo-600 relative">
+        {/* LEFT SIDE (TRAVEL VISUAL) */}
+        <div className="hidden md:block relative">
 
-          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1529070538774-1843cb3265df')] bg-cover bg-center" />
+          {/* Background Image */}
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1502920917128-1aa500764b6e')] bg-cover bg-center" />
 
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-indigo-900/70" />
+
+          {/* Content */}
           <div className="relative h-full flex flex-col justify-center items-center text-white p-10">
-            <h1 className="text-3xl font-bold">Welcome Back</h1>
-            <p className="text-blue-100 mt-2 text-center">
-              Continue your journey with Compare Wings
+            <h1 className="text-4xl font-bold">Explore the World 🌍</h1>
+            <p className="text-blue-100 mt-4 text-center">
+              Discover flights, compare prices, and plan your next journey with ease.
             </p>
           </div>
 
@@ -65,28 +70,24 @@ export default function SignIn() {
         {/* RIGHT SIDE FORM */}
         <div className="p-10 flex flex-col justify-center">
 
-          {/* HEADER */}
           <h2 className="text-3xl font-bold text-slate-800">
-            Sign In
+            Welcome Back ✈️
           </h2>
 
           <p className="text-slate-500 text-sm mt-1 mb-6">
-            Access your flight dashboard
+            Sign in to continue your travel journey
           </p>
 
-          {/* FORM */}
           <form className="space-y-4" onSubmit={formsubmit}>
 
-            {/* USERNAME */}
             <input
               name="username"
               value={value.username}
               onChange={handleChange}
-              placeholder="Username"
-              className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:border-blue-400 outline-none transition"
+              placeholder="Enter your username"
+              className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition"
             />
 
-            {/* PASSWORD */}
             <div className="relative">
 
               <input
@@ -94,8 +95,8 @@ export default function SignIn() {
                 value={value.password}
                 onChange={handleChange}
                 type={passwordVisible ? "text" : "password"}
-                placeholder="Password"
-                className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:border-blue-400 outline-none transition pr-12"
+                placeholder="Enter your password"
+                className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition pr-12"
               />
 
               <button
@@ -108,24 +109,22 @@ export default function SignIn() {
 
             </div>
 
-            {/* BUTTON */}
             <button
               type="submit"
-              className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition"
+              className="w-full h-12 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition"
             >
-              Sign In
+              Start Exploring ✈️
             </button>
 
           </form>
 
-          {/* FOOTER */}
           <p className="text-sm text-center mt-6 text-slate-500">
-            Don’t have an account?{" "}
+            New traveler?{" "}
             <span
               onClick={() => navigate("/signup")}
               className="text-blue-600 font-semibold cursor-pointer"
             >
-              Sign Up
+              Create Account
             </span>
           </p>
 
