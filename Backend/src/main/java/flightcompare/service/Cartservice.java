@@ -19,4 +19,8 @@ public interface Cartservice {
 
 
     void  addtocart(Cartitemdto dto);
+
+    List<Cartitemdto> getcartbyid(long id);
+
+
 }

@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,6 +59,15 @@ item.setPriceSnapshot(dto.getPrice());
 
     }
 
+    @Override
+    public List<Cartitemdto> getcartbyid(long id){
+List<Cartitem> entity =  crepo.getcartbyid(id);
+List<Cartitemdto> dtos = new ArrayList<>();
+dtos=entity.stream().map(this::toDtoo).toList();
+return dtos;
+    }
+
+
 
     public CartDto toDto(Tripcarts entity) {
         if (entity == null) {
@@ -69,6 +79,8 @@ item.setPriceSnapshot(dto.getPrice());
         return dto;
     }
 
+
+
     // Convert DTO to Entity
     public static Tripcarts toEntity(CartDto dto) {
         if (dto == null) {
@@ -78,5 +90,16 @@ item.setPriceSnapshot(dto.getPrice());
         entity.setId(dto.getId());
         entity.setCartName(dto.getName()); // Mapping name -> cartName
         return entity;
+    }
+
+    public Cartitemdto toDtoo(Cartitem entity) {
+        Cartitemdto dto = new Cartitemdto();
+
+        dto.setCartid(entity.getCart().getId());
+        dto.setItemname(entity.getItemname());
+        dto.setItemtype(entity.getItemtype());
+        dto.setPrice(entity.getPriceSnapshot());
+
+        return dto;
     }
 }

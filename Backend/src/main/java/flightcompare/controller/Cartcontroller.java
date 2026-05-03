@@ -2,7 +2,9 @@ package flightcompare.controller;
 
 import flightcompare.DTO.CartDto;
 import flightcompare.DTO.Cartitemdto;
+import flightcompare.model.Cartitem;
 import flightcompare.service.Cartservice;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ public class Cartcontroller {
 
     @Autowired
     private Cartservice cartservice;
+
+
 
 
 
@@ -43,6 +47,17 @@ public class Cartcontroller {
     public ResponseEntity<String> add(@RequestBody Cartitemdto cartDto) {
         cartservice.addtocart(cartDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Cart created successfully");
+    }
+
+    @GetMapping("/byid")
+    public ResponseEntity<List<Cartitemdto>> getbyid(@RequestParam long id){
+       List< Cartitemdto> dto= cartservice.getcartbyid(id);
+       if (dto == null || dto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+       }
+       else{
+           return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+       }
     }
 
 }
