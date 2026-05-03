@@ -33,22 +33,14 @@ public class Hotelsscrapper  {
             options.addArguments("--force-device-scale-factor=0.67");
 
         FileReader fl = null;
-        try {
-            fl = new FileReader("./src/main/resources/config.properties");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+
         WebDriver driver=new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
             driver.manage().window().maximize();
             Properties prop=new Properties();
             prop=new Properties();
-        try {
-            prop.load(fl);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        driver.get(prop.getProperty("Url"));
+
+        driver.get("https://www.yatra.com/");
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("document.body.style.zoom='67%'");
             Hotels hotelspage = new Hotels(driver);

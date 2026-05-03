@@ -36,16 +36,16 @@ public List<FlightResponseDto> flightset(String src,String dest,String month) th
         options.addArguments("--disable-popup-blocking");
 	options.addArguments("--force-device-scale-factor=0.67");
         
-	FileReader fl = new FileReader("./src/main/resources/config.properties")  ;
+//	FileReader fl = new FileReader("./src/main/resources/config.properties")  ;
 	WebDriver driver=new ChromeDriver(options);
 	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 	driver.manage().window().maximize();
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	js.executeScript("document.body.style.zoom='67%'");
-	Properties prop=new Properties();
-	prop=new Properties();
-	prop.load(fl);
-	driver.get(prop.getProperty("Url"));
+//	Properties prop=new Properties();
+//	prop=new Properties();
+//	prop.load(fl);
+	driver.get("https://www.yatra.com/");
 	FlightHomepage pg=new FlightHomepage(driver);
 	Thread.sleep(2000);
 //	driver.findElement(By.xpath("//button[@name='close']")).click();
