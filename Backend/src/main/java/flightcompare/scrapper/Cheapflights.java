@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -34,12 +35,15 @@ public List<FlightResponseDto> flightset(String src,String dest,String month) th
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-popup-blocking");
+
+	options.addArguments("--window-size=1920,1080");
 	options.addArguments("--force-device-scale-factor=0.67");
+
         
 //	FileReader fl = new FileReader("./src/main/resources/config.properties")  ;
 	WebDriver driver=new ChromeDriver(options);
 	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-	driver.manage().window().maximize();
+	driver.manage().window().setSize(new Dimension(1920, 1080));
 	JavascriptExecutor js = (JavascriptExecutor) driver;
 	js.executeScript("document.body.style.zoom='67%'");
 //	Properties prop=new Properties();

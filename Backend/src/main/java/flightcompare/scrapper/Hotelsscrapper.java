@@ -3,6 +3,7 @@ package flightcompare.scrapper;
 import flightcompare.DTO.HotelDto;
 import flightcompare.pageobjet.FlightHomepage;
 import flightcompare.pageobjet.Hotels;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -32,11 +33,13 @@ public class Hotelsscrapper  {
             options.addArguments("--disable-popup-blocking");
             options.addArguments("--force-device-scale-factor=0.67");
 
+            options.addArguments("--window-size=1920,1080");
+
         FileReader fl = null;
 
         WebDriver driver=new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-            driver.manage().window().maximize();
+            driver.manage().window().setSize(new Dimension(1920, 1080));
             Properties prop=new Properties();
             prop=new Properties();
 
