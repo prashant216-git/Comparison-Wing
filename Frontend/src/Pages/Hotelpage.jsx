@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import NavBar from "../components/Navbar";
 import api from "../api";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function HotelPage() {
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState({
     city: "",
@@ -13,12 +17,11 @@ export default function HotelPage() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔥 CART STATES
   const [showModal, setShowModal] = useState(false);
   const [carts, setCarts] = useState([]);
   const [selectedHotel, setSelectedHotel] = useState(null);
 
-  // ---------------- HANDLE INPUT ----------------
+  // ---------------- INPUT ----------------
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -50,7 +53,7 @@ export default function HotelPage() {
       const from = getMonthDate(form.from);
       const to = getMonthDate(form.to);
 
-      const res = await api.post("/Hotels/search", {
+      const res = await api.post("/Hotel/search", {
         city: form.city,
         frommonth: from.month,
         fromdate: from.day,
@@ -103,17 +106,44 @@ export default function HotelPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-red-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
 
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <NavBar isLoggedIn={true} />
+
+        {/* 🔥 SWITCH TABS */}
+        <div className="flex gap-4 mb-6 justify-center mt-4">
+
+          <button
+            onClick={() => navigate("/homepage")}
+            className={`px-6 py-2 rounded-full font-semibold transition ${
+              location.pathname === "/homepage"
+                ? "bg-blue-600 text-white shadow-lg"
+                : "bg-white text-slate-600 border hover:bg-blue-50"
+            }`}
+          >
+            ✈ Flights
+          </button>
+
+          <button
+            onClick={() => navigate("/hotels")}
+            className={`px-6 py-2 rounded-full font-semibold transition ${
+              location.pathname === "/hotels"
+                ? "bg-indigo-600 text-white shadow-lg"
+                : "bg-white text-slate-600 border hover:bg-indigo-50"
+            }`}
+          >
+            🏨 Hotels
+          </button>
+
+        </div>
 
         {/* 🔍 SEARCH */}
         <form
           onSubmit={handleSearch}
-          className="bg-white p-6 mt-6 rounded-2xl shadow-xl border border-blue-100"
+          className="bg-white/70 backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-white"
         >
-          <h2 className="text-xl font-bold mb-4 text-blue-900">
+          <h2 className="text-xl font-bold mb-4 text-slate-800">
             Search Hotels 🏨
           </h2>
 
@@ -124,7 +154,7 @@ export default function HotelPage() {
               value={form.city}
               onChange={handleChange}
               placeholder="Enter city"
-              className="p-3 rounded-xl border border-blue-200"
+              className="h-11 px-4 rounded-xl border border-slate-200 focus:border-indigo-500 outline-none"
             />
 
             <input
@@ -132,7 +162,7 @@ export default function HotelPage() {
               name="from"
               value={form.from}
               onChange={handleChange}
-              className="p-3 rounded-xl border border-blue-200"
+              className="h-11 px-4 rounded-xl border border-slate-200 focus:border-indigo-500 outline-none"
             />
 
             <input
@@ -140,30 +170,31 @@ export default function HotelPage() {
               name="to"
               value={form.to}
               onChange={handleChange}
-              className="p-3 rounded-xl border border-blue-200"
+              className="h-11 px-4 rounded-xl border border-slate-200 focus:border-indigo-500 outline-none"
             />
 
             <button
               type="submit"
-              className="bg-gradient-to-r from-blue-600 to-red-500 text-white rounded-xl font-bold hover:scale-105 transition"
+              className="h-11 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:scale-[1.03] transition"
             >
               Search
             </button>
+
           </div>
         </form>
 
         {/* ⏳ LOADING */}
         {loading && (
-          <p className="text-center mt-4 text-blue-700">
+          <p className="text-center mt-4 text-indigo-600">
             Fetching hotels...
           </p>
         )}
 
         {/* 🏨 RESULTS */}
         {!loading && results.length > 0 && (
-          <div className="mt-6 bg-white p-6 rounded-2xl shadow-xl border border-blue-100">
+          <div className="mt-6 bg-white/70 backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-white">
 
-            <h2 className="text-xl font-bold mb-4 text-blue-900 text-center">
+            <h2 className="text-xl font-bold mb-4 text-slate-800 text-center">
               Available Hotels
             </h2>
 
@@ -172,9 +203,9 @@ export default function HotelPage() {
               {results.map((hotel, index) => (
                 <div
                   key={index}
-                  className="p-4 rounded-xl border bg-gradient-to-r from-white to-blue-50 shadow hover:shadow-lg hover:scale-[1.02] transition"
+                  className="p-4 rounded-xl border bg-white shadow hover:shadow-xl hover:scale-[1.02] transition"
                 >
-                  <h3 className="font-bold text-lg text-blue-900">
+                  <h3 className="font-bold text-lg text-slate-800">
                     {hotel.hotelname}
                   </h3>
 
@@ -184,8 +215,8 @@ export default function HotelPage() {
 
                   <div className="flex justify-between items-center mt-4">
 
-                    <p className="text-xl font-bold text-red-500">
-                      ₹{hotel.price}
+                    <p className="text-xl font-bold text-indigo-600">
+                      {hotel.price}
                     </p>
 
                     <button
@@ -202,16 +233,15 @@ export default function HotelPage() {
             </div>
           </div>
         )}
-
       </div>
 
       {/* 🔥 CART MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center">
 
-          <div className="bg-white p-6 rounded-2xl w-80 shadow-2xl border">
+          <div className="bg-white p-6 rounded-2xl w-80 shadow-2xl">
 
-            <h2 className="font-bold mb-4 text-lg text-blue-900">
+            <h2 className="font-bold mb-4 text-lg">
               Select Cart
             </h2>
 
@@ -219,7 +249,7 @@ export default function HotelPage() {
               <div
                 key={cart.id}
                 onClick={() => addToCart(cart.id)}
-                className="p-3 border mb-2 rounded-lg cursor-pointer hover:bg-blue-50"
+                className="p-3 border mb-2 rounded-lg cursor-pointer hover:bg-indigo-50"
               >
                 {cart.name}
               </div>
@@ -227,7 +257,7 @@ export default function HotelPage() {
 
             <button
               onClick={() => setShowModal(false)}
-              className="mt-4 text-red-500 text-sm hover:underline"
+              className="mt-4 text-red-500 text-sm"
             >
               Close
             </button>

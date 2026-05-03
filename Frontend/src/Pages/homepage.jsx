@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import NavBar from "../components/Navbar";
 import ComparisonCards from "../components/ComparisonCards";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Homepage() {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchData, setSearchData] = useState({
     from: "",
@@ -100,7 +101,6 @@ export default function Homepage() {
 
   // ---------------- ADD TO CART ----------------
   const addToCart = async (cartId) => {
-
     try {
       await api.post("/cart/add", {
         cartid: cartId,
@@ -122,6 +122,33 @@ export default function Homepage() {
 
       <div className="max-w-6xl mx-auto px-4">
         <NavBar isLoggedIn={true} />
+
+        {/* 🔥 SWITCH TABS */}
+        <div className="flex gap-4 mb-6 justify-center">
+
+          <button
+            onClick={() => navigate("/homepage")}
+            className={`px-6 py-2 rounded-full font-semibold transition ${
+              location.pathname === "/homepage"
+                ? "bg-blue-600 text-white shadow-lg"
+                : "bg-white text-slate-600 border hover:bg-blue-50"
+            }`}
+          >
+            ✈ Flights
+          </button>
+
+          <button
+            onClick={() => navigate("/hotels")}
+            className={`px-6 py-2 rounded-full font-semibold transition ${
+              location.pathname === "/hotels"
+                ? "bg-indigo-600 text-white shadow-lg"
+                : "bg-white text-slate-600 border hover:bg-indigo-50"
+            }`}
+          >
+            🏨 Hotels
+          </button>
+
+        </div>
 
         {/* 🔍 SEARCH */}
         <form
