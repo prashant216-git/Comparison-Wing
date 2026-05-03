@@ -10,6 +10,7 @@ import Reactflow from './components/Reactflow'
 
 import ProtectedRoute from './components/ProtectedRoute';
 import CartPage from "./Pages/CartPage";
+import HotelPage from './Pages/Hotelpage';
 
 function App() {
 
@@ -35,7 +36,21 @@ function App() {
           }
         />
 
+
+           <Route
+          path="/hotels"
+          element={
+            
+              <HotelPage />
+            
+          }
+        />
+
         <Route path="/OtpVerification" element={<OtpVerification/>}/>
+
+
+
+
 
         <Route path="/Reactflow" element={
           <ProtectedRoute>
